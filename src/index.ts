@@ -3,8 +3,9 @@ import {
   captureMessage,
   init,
   NodeOptions,
-  SeverityLevel,
+  Severity,
 } from "@sentry/node";
+import type { SeverityLevel } from "./severity";
 import { Scope } from "@sentry/types";
 import get from "lodash.get";
 import build from "pino-abstract-transport";
@@ -58,7 +59,7 @@ export default async function (initSentryOptions: Partial<PinoSentryOptions>) {
   }
 
   function enrichScope(scope: Scope, pinoEvent) {
-    scope.setLevel(pinoLevelToSentryLevel(pinoEvent.level));
+    scope.setLevel(pinoLevelToSentryLevel(pinoEvent.level) as Severity);
 
     if (pinoSentryOptions.withLogRecord) {
       scope.setContext("pino-log-record", pinoEvent);
@@ -66,14 +67,14 @@ export default async function (initSentryOptions: Partial<PinoSentryOptions>) {
 
     if (pinoSentryOptions.tags?.length) {
       pinoSentryOptions.tags.forEach((tag) =>
-        scope.setTag(tag, get(pinoEvent, tag)),
+        scope.setTag(tag, get(pinoEvent, tag))
       );
     }
 
     if (pinoSentryOptions.context?.length) {
       const context = {};
       pinoSentryOptions.context.forEach(
-        (c) => (context[c] = get(pinoEvent, c)),
+        (c) => (context[c] = get(pinoEvent, c))
       );
       scope.setContext("pino-context", context);
     }
@@ -93,7 +94,7 @@ export default async function (initSentryOptions: Partial<PinoSentryOptions>) {
       if (level >= pinoSentryOptions.minLevel) {
         if (serializedError) {
           captureException(deserializePinoError(serializedError), (scope) =>
-            enrichScope(scope, obj),
+            enrichScope(scope, obj)
           );
         } else {
           captureMessage(obj?.msg, (scope) => enrichScope(scope, obj));

@@ -1,5 +1,5 @@
 {
-  "name": "pino-sentry-transport",
+  "name": "@ledayun/pino-sentry-transport",
   "version": "1.0.5",
   "description": "Integrates Pino and Sentry.",
   "main": "./build/cjs/index.js",
@@ -31,7 +31,8 @@
     "test:setup": "node -r ./esbuild-hook ./scripts/testSetup",
     "spell:check": "cspell \"{README.md,CODE_OF_CONDUCT.md,CONTRIBUTING.md,.github/*.md,src/**/*.ts}\"",
     "cz": "cz",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "pub": "npm publish --access public"
   },
   "devDependencies": {
     "@ryansonshine/commitizen": "^4.2.8",
@@ -41,8 +42,8 @@
     "@semantic-release/github": "^9.0.4",
     "@semantic-release/npm": "^10.0.4",
     "@semantic-release/release-notes-generator": "^11.0.4",
-    "@sentry/node": "^7.63.0",
-    "@sentry/types": "^7.63.0",
+    "@sentry/node": "^5.30.0",
+    "@sentry/types": "^5.30.0",
     "@types/lodash.get": "^4.4.7",
     "@types/node": "^20.4.10",
     "@types/prompts": "^2.4.4",
@@ -67,7 +68,7 @@
     "vitest": "^0.34.1"
   },
   "peerDependencies": {
-    "@sentry/node": "^7.0.0",
+    "@sentry/node": "^5.30.0",
     "pino": "^7.0.0 || ^8.0.0"
   },
   "volta": {
